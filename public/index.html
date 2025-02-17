@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-mode">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HitMaster Traffic Bot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/modern.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1><i class="fas fa-robot"></i> HitMaster Bot</h1>
+                    <div class="header-credit">
+                        <p>Created by <span class="credit-name">Md. Shakibul Islam</span></p>
+                        <div class="social-links">
+                            <a href="https://youtube.com/channel/UCZ_JO1XNL0ZxIIWZoQgOiyA?si=yKwAfAJ7b_oP7yEU" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                            <a href="https://www.facebook.com/shakibshs3/" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="https://github.com/imShakibul" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="mailto:imshakibul1@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="theme-toggle">
+                        <input type="checkbox" id="darkMode" class="theme-input" checked>
+                        <label for="darkMode" class="theme-label">
+                            <i class="fas fa-sun"></i>
+                            <i class="fas fa-moon"></i>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Left Column -->
+            <section class="main-column left-column">
+                <!-- URL Management -->
+                <div class="card url-card">
+                    <h2><i class="fas fa-link"></i> URL Management</h2>
+                    <div class="url-content">
+                        <div class="url-input-group">
+                            <textarea id="urlList" class="url-input" rows="5" placeholder="Enter URLs here (one per line)..."></textarea>
+                            <div class="url-actions">
+                                <button id="importUrls" class="action-btn"><i class="fas fa-file-import"></i> Import URLs</button>
+                                <button id="clearUrls" class="action-btn warning"><i class="fas fa-trash"></i> Clear URLs</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Proxy Settings -->
+                <div class="card proxy-card">
+                    <h2><i class="fas fa-shield-alt"></i> Proxy Settings</h2>
+                    <div class="proxy-content">
+                        <div class="proxy-toggle">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="useProxy">
+                                Use Proxies
+                            </label>
+                        </div>
+                        <div class="proxy-input-group">
+                            <textarea id="proxyList" class="proxy-input" rows="3" placeholder="Enter proxies here (one per line)...&#10;Format: protocol://username:password@host:port" disabled></textarea>
+                            <div class="proxy-actions">
+                                <button id="testProxies" class="action-btn"><i class="fas fa-vial"></i> Test Proxies</button>
+                                <button id="clearProxies" class="action-btn warning"><i class="fas fa-trash"></i> Clear Proxies</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Traffic Goal -->
+                <div class="card goal-card">
+                    <h2><i class="fas fa-bullseye"></i> Traffic Goal</h2>
+                    <div class="goal-content">
+                        <div class="goal-input-group">
+                            <input type="number" id="targetInput" class="goal-input" placeholder="Set your target visits" min="1">
+                            <button id="setGoal" class="action-btn success"><i class="fas fa-check"></i> Set Goal</button>
+                        </div>
+                        <div class="visit-time-settings">
+                            <div class="time-input-group">
+                                <label for="minVisitTime">Min Visit Time (sec):</label>
+                                <input type="number" id="minVisitTime" class="time-input" value="30" min="5" max="300">
+                            </div>
+                            <div class="time-input-group">
+                                <label for="maxVisitTime">Max Visit Time (sec):</label>
+                                <input type="number" id="maxVisitTime" class="time-input" value="120" min="10" max="600">
+                            </div>
+                        </div>
+                        <div class="goal-progress">
+                            <div class="progress">
+                                <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+                            </div>
+                            <div class="progress-stats">
+                                <span id="progressText">0 / 0 visits</span>
+                                <span id="progressPercent">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Column -->
+            <section class="main-column right-column">
+                <!-- URL Stats and Visit Stats -->
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h2><i class="fas fa-chart-line"></i> URL Stats</h2>
+                        <div class="analytics-content">
+                            <div class="analytics-item">
+                                <div class="analytics-value" id="totalUrls">0</div>
+                                <div class="analytics-label">Total URLs</div>
+                            </div>
+                            <div class="analytics-item">
+                                <div class="analytics-value" id="uniqueUrls">0</div>
+                                <div class="analytics-label">Unique URLs</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <h2><i class="fas fa-chart-bar"></i> Visit Stats</h2>
+                        <div class="analytics-content">
+                            <div class="analytics-item">
+                                <div class="analytics-value" id="totalVisits">0</div>
+                                <div class="analytics-label">Total Visits</div>
+                            </div>
+                            <div class="analytics-item">
+                                <div class="analytics-value" id="targetVisits">0</div>
+                                <div class="analytics-label">Target Visits</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Success and Time Stats -->
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h2><i class="fas fa-check-circle"></i> Success Stats</h2>
+                        <div class="analytics-content">
+                            <div class="analytics-item">
+                                <div class="analytics-value" id="successRate">0%</div>
+                                <div class="analytics-label">Success Rate</div>
+                            </div>
+                            <div class="analytics-item">
+                                <div class="analytics-value" id="successfulVisits">0</div>
+                                <div class="analytics-label">Successful Visits</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <h2><i class="fas fa-clock"></i> Time Stats</h2>
+                        <div class="analytics-content">
+                            <div class="analytics-item">
+                                <div class="analytics-value" id="avgTime">0s</div>
+                                <div class="analytics-label">Average Time</div>
+                            </div>
+                            <div class="analytics-item">
+                                <div class="analytics-value" id="totalTime">0s</div>
+                                <div class="analytics-label">Total Time</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Log -->
+                <div class="card log-card">
+                    <h2><i class="fas fa-terminal"></i> Activity Log</h2>
+                    <div class="log-container" id="logContainer"></div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Controls -->
+        <footer class="app-controls">
+            <button id="startBtn" class="control-btn success"><i class="fas fa-play"></i> Start Bot</button>
+            <button id="stopBtn" class="control-btn danger" disabled><i class="fas fa-stop"></i> Stop Bot</button>
+            <button id="clearBtn" class="control-btn warning"><i class="fas fa-trash"></i> Clear Data</button>
+        </footer>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
